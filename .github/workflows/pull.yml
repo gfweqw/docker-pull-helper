@@ -1,32 +1,23 @@
-name: Pull Core Images
+name: Pull Base Images
 on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Pull and Save API
+    - name: Pull and Save Alpine
       run: |
-        docker pull --platform linux/amd64 langgenius/dify-api:1.13.0
-        docker save -o dify-api-amd64.tar langgenius/dify-api:1.13.0
+        docker pull --platform linux/amd64 alpine:latest
+        docker save -o alpine-amd64.tar alpine:latest
     - uses: actions/upload-artifact@v4
       with:
-        name: dify-api-image
-        path: dify-api-amd64.tar
+        name: alpine-image
+        path: alpine-amd64.tar
 
-    - name: Pull and Save Web
+    - name: Pull and Save Ubuntu
       run: |
-        docker pull --platform linux/amd64 langgenius/dify-web:1.13.0
-        docker save -o dify-web-amd64.tar langgenius/dify-web:1.13.0
+        docker pull --platform linux/amd64 ubuntu:latest
+        docker save -o ubuntu-amd64.tar ubuntu:latest
     - uses: actions/upload-artifact@v4
       with:
-        name: dify-web-image
-        path: dify-web-amd64.tar
-
-    - name: Pull and Save Sandbox
-      run: |
-        docker pull --platform linux/amd64 langgenius/dify-sandbox:0.2.12
-        docker save -o dify-sandbox-amd64.tar langgenius/dify-sandbox:0.2.12
-    - uses: actions/upload-artifact@v4
-      with:
-        name: dify-sandbox-image
-        path: dify-sandbox-amd64.tar
+        name: ubuntu-image
+        path: ubuntu-amd64.tar
