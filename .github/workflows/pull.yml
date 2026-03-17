@@ -4,8 +4,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: docker pull --platform linux/amd64 langgenius/dify-plugin-daemon:latest
-    - run: docker save -o dify-plugin-daemon-amd64.tar langgenius/dify-plugin-daemon:latest
+    - run: docker pull --platform linux/amd64 langgenius/dify-plugin-daemon:0.5.3-local
+    - run: docker save -o dify-plugin-daemon-amd64.tar langgenius/dify-plugin-daemon:0.5.3-local
     - uses: actions/upload-artifact@v4
       with:
         name: dify-plugin-image
