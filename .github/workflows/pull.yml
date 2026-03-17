@@ -1,12 +1,32 @@
-name: Offline Docker Puller
-on: [push]
+name: Pull Core Images
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - run: docker pull --platform linux/amd64 langgenius/dify-plugin-daemon:0.5.3-local
-    - run: docker save -o dify-plugin-daemon-amd64.tar langgenius/dify-plugin-daemon:0.5.3-local
+    - name: Pull and Save API
+      run: |
+        docker pull --platform linux/amd64 langgenius/dify-api:1.13.0
+        docker save -o dify-api-amd64.tar langgenius/dify-api:1.13.0
     - uses: actions/upload-artifact@v4
       with:
-        name: dify-plugin-image
-        path: dify-plugin-daemon-amd64.tar
+        name: dify-api-image
+        path: dify-api-amd64.tar
+
+    - name: Pull and Save Web
+      run: |
+        docker pull --platform linux/amd64 langgenius/dify-web:1.13.0
+        docker save -o dify-web-amd64.tar langgenius/dify-web:1.13.0
+    - uses: actions/upload-artifact@v4
+      with:
+        name: dify-web-image
+        path: dify-web-amd64.tar
+
+    - name: Pull and Save Sandbox
+      run: |
+        docker pull --platform linux/amd64 langgenius/dify-sandbox:0.2.12
+        docker save -o dify-sandbox-amd64.tar langgenius/dify-sandbox:0.2.12
+    - uses: actions/upload-artifact@v4
+      with:
+        name: dify-sandbox-image
+        path: dify-sandbox-amd64.tar
