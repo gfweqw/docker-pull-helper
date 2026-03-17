@@ -1,0 +1,12 @@
+name: Offline Docker Puller
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: docker pull --platform linux/amd64 langgenius/dify-plugin-daemon:latest
+    - run: docker save -o dify-plugin-daemon-amd64.tar langgenius/dify-plugin-daemon:latest
+    - uses: actions/upload-artifact@v4
+      with:
+        name: dify-plugin-image
+        path: dify-plugin-daemon-amd64.tar
